@@ -1,0 +1,251 @@
+; Akumanion EMS Helper
+; Git: https://github.com/AkumaHacai/AutoHotKey-to-EMS
+
+
+
+
+F7::
+FileEncoding, UTF-8
+Send, ^{a}
+Send, ^{c}
+Send, {delete}
+copiedText := Clipboard
+HoursTime := StrSplit(copiedText , ":")[1]
+MinutesTime := StrSplit(copiedText , ":")[2]
+
+if( MinutesTime = "00" or  MinutesTime = "10" or  MinutesTime = "20" or  MinutesTime = "30" or  MinutesTime = "40" or  MinutesTime = "50")
+	{
+		if(HoursTime = "23") 
+		{
+			if (MinutesTime = "00") 
+			{
+			TimeText := HoursTime . ":00, " . HoursTime . ":10, " . HoursTime . ":20"
+			}
+			if (MinutesTime = "10") 
+			{
+			TimeText := HoursTime . ":10, " . HoursTime . ":20, " . HoursTime . ":30"
+			}
+			if (MinutesTime = "20") 
+			{
+			TimeText := HoursTime . ":20, " . HoursTime . ":30, " . HoursTime . ":40" 
+			}
+			if (MinutesTime = "30") 
+			{
+			TimeText := HoursTime . ":30, " . HoursTime . ":40, " . HoursTime . ":50"
+			}
+			if (MinutesTime = "40") 
+			{
+			TimeText := HoursTime . ":40, " . HoursTime . ":50, " . 00 . ":00"
+			}
+			if (MinutesTime = "50") 
+			{
+			TimeText := HoursTime . ":50, " . 00 . ":00, " . 00 . ":10"
+			}
+			SendMessage, 0x50,, 0x4090409,, A
+			sleep 400
+			SendInput, /dep to ALL: Занята ли гос.волна на %TimeText%? {enter}
+			Sleep, 150000 ;
+			Send, {T}
+			Sleep, 400 ;
+			SendInput, /dep to ALL: Занята ли гос.волна на %TimeText%? {*}Повторяя{*}
+			Sleep, 400 ;
+			Send, {enter}
+			Sleep, 150000 ;
+			Send, {T}
+			Sleep, 400 ;
+			Send, /dep to ALL: Не услышав ответа, занял гос.волну на %TimeText%. 
+			Send, {enter}
+			Reload			
+		}
+		else
+		{
+			if (MinutesTime = "00") 
+			{
+			TimeText := HoursTime . ":00, " . HoursTime . ":10, " . HoursTime . ":20"
+			}
+			if (MinutesTime = "10") 
+			{
+			TimeText := HoursTime . ":10, " . HoursTime . ":20, " . HoursTime . ":30"
+			}
+			if (MinutesTime = "20") 
+			{
+			TimeText := HoursTime . ":20, " . HoursTime . ":30, " . HoursTime . ":40"
+			}
+			if (MinutesTime = "30") 
+			{
+			TimeText := HoursTime . ":30, " . HoursTime . ":40, " . HoursTime . ":50"
+			}
+			if (MinutesTime = "40") 
+			{
+			TimeText := HoursTime . ":40, " . HoursTime . ":50, " . HoursTime+1 . ":00"
+			}
+			if (MinutesTime = "50") 
+			{
+			TimeText := HoursTime . ":50, " . HoursTime+1 . ":00, " . HoursTime+1 . ":10"
+			}
+		SendMessage, 0x50,, 0x4090409,, A
+		sleep 400
+		SendInput, /dep to ALL: Занята ли гос.волна на %TimeText%? {enter}
+		Sleep, 150000 ;
+		Send, {T}
+		Sleep, 400 ;
+		SendInput, /dep to ALL: Занята ли гос.волна на %TimeText%? {*}Повторяя{*}
+		Sleep, 400 ;
+		Send, {enter}
+		Sleep, 150000 ;
+		Send, {T}
+		Sleep, 400 ;
+		Send, /dep to ALL: Не услышав ответа, занял гос.волну на %TimeText%. 
+		Send, {enter}
+		Reload
+		}
+	}
+else
+	{
+	Send, Не правильно заданы минуты. Допускаетуются минуты: 10,20,30,40,50 (Минуты)
+	Return
+	}
+
+F8::
+SendMessage, 0x50,, 0x4090409,, A
+Send, {T}
+Send, /dep to ALL: Принято.
+Sleep, 400
+Send, {enter}
+Reload
+
+F9::
+SendMessage, 0x50,, 0x4090409,, A
+Sleep, 400 ;
+SendInput, {T} 
+Sleep 400 ; 
+SendInput, /dep to all: Занял гос.волну. {Enter}
+Sleep 400 ;
+SendInput, {T} 
+Sleep 400 ;
+SendInput, /gnews Уважаемые жители и гости штата{!}{space}Сейчас будет проходить собеседование в Emergency Medical Services. Критерии к кандидатам: возраст от 21 года, иметь медицинские справки, водительское удостоверение категории D и диплом о высшем образовании. Собеседование будет проходить на крыше больницы Pillbox. С уважением, коллектив Emergency Medical Services. {Enter}
+Sleep 1000 ;
+SendInput, {T} 
+Sleep 1000 ;
+SendInput, /report Gnews {enter}
+Sleep 400 ;
+Keywait, Rshift, D;
+SendInput, {T} 
+Sleep 400 ;
+SendInput, /dep to all: Освободил гос.волну. {Enter}
+Return
+
+^F9::
+SendMessage, 0x50,, 0x4090409,, A 
+Sleep, 400 ;
+SendInput, {T} 
+Sleep 400 ; 
+SendInput, /dep to ALL: Занял гос.волну. {Enter}
+Sleep 400 ;
+SendInput, {T} 
+Sleep 400 ;
+SendInput, /gnews Уважаемые жители и гости штата{!}{space}Собеседование в Emergency Medical Services окончено. Если не успели прийти, то вы всегда можете оставить свое заявление о трудоустройстве на портале штата. С уважением, коллектив Emergency Medical Services. {Enter}
+Sleep 1000 ;
+SendInput, {T} 
+Sleep 1000 ;
+SendInput, /report Gnews {enter}
+Sleep 400 ;
+Keywait, Rshift, D;
+SendInput, {T} 
+Sleep 400 ;
+SendInput, /dep to ALL: Освободил гос.волну. {Enter}
+Return
+
++F9::
+SendMessage, 0x50,, 0x4090409,, A
+Sleep, 400,
+SendInput, {T} 
+Sleep 400 ; 
+SendInput, /dep to ALL: Занял гос.волну. {Enter}
+Sleep 400 ;
+SendInput, {T} 
+Sleep 400 ;
+SendInput, /gnews Уважаемые жители и гости штата{!}{space}Хочу напомнить, что в данный момент проходит собеседование в Emergency Medical Services. Критерии к кандидатам: возраст от 21 года, иметь медицинские справки, водительское удостоверение категории D и диплом о высшем образовании. Собеседование будет проходить на крыше больницы Pillbox. С уважением, коллектив Emergency Medical Services. {Enter}
+Sleep 1000 ;
+SendInput, {T} 
+Sleep 1000 ;
+SendInput, /report Gnews {enter}
+Sleep 400 ;
+Keywait, Rshift, D;
+SendInput, {T} 
+Sleep 400 ;
+SendInput, /dep to ALL: Освободил гос.волну. {Enter}
+Return
+
+F4::
+FileEncoding, UTF-8
+SendMessage, 0x50,, 0x4090409,, A
+Sleep 400 ;
+Send, {Home}
+{
+ Send, /accept
+}
+Send, {space}
+Send, {enter}
+Return
+
+F10::
+Reload
+
++F10::
+Pause
+
++F4::
+SendMessage, 0x50,, 0x4090409,, A
+SendInput, {T}
+Sleep, 400
+SendInput, /fb Спавн карс через 30 секунд. Не покидайте свои АСМП{!} {enter}
+Sleep, 10000
+SendInput, {T}
+Sleep, 400
+SendInput, /fb Спавн карс через 20 секунд. Не покидайте свои АСМП{!} {enter}
+Sleep, 10000
+SendInput, {T}
+Sleep, 400
+SendInput, /fb Спавн карс через 10 секунд. Не покидайте свои АСМП{!} {enter}
+Sleep, 10000
+SendInput, {T}
+Sleep, 400
+SendInput, /fb Спавн карс через 0 секунд. Не покидайте свои АСМП, кто не успел тот идет пешком{!} {enter}
+Sleep, 400
+SendInput, {T}
+Sleep, 400
+SendInput, /spawncars {enter}
+Return
+
+Ins::Exitapp  ;
+
++Ins::
+FixBugUnpressKeys() {
+   for key, key in ["RCtrl", "LCtrl", "LShift", "RShift", "RAlt", "LAlt"]
+      if Direction := [0,0,"Up"][2+GetKeyState(Key)-GetKeyState(Key, "P")]
+         SendInput {%Key% %Direction%}
+}
+
+
+*F5:: ; Оверлей - Памятка
+State3:=!State3
+If state3
+{
+CustomColor3 = EEAA99
+Gui +LastFound +AlwaysOnTop -Caption +ToolWindow 
+Gui, Color, black
+Gui, Font, s8
+Gui, Font, cWhite
+Gui, Font, w1000
+GUI, ADD,TEXT,cWhite,
+ ================================================================================================================================================================================================================================================================================
+GUI, ADD,TEXT,cGreen,  |  Горячие клавиши:     F4+Shift-SpawnCars     F4-'/accept'     F7-Занять гос. волну     F8-Остновка занятия гос. волны.     F10-Pause     F9-Начало собеса Gnews     Shift+F9-Напоминалка о собесе     Ctrl+F9-Конец собеса     F5-Скрыть GUI |
+GUI, ADD,TEXT,cGreen,  |  Экстренные кнопки:   F10-Перезагрузка       F10+Shift-Пауза  Insert-Паник Кей         Shift+Insert-Фикс залипания                                                                                                                           |
+
+Gui, Show, x0 y-33 NoActivate, window. 
+
+}
+Else
+Gui Destroy
+Return                                                                                                                                                                                                             
